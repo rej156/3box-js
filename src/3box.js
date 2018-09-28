@@ -3,6 +3,7 @@ const bip39 = require('bip39')
 const localstorage = require('store')
 const IPFS = require('ipfs')
 const OrbitDB = require('orbit-db')
+const sha256 = require('js-sha256').sha256
 
 const ProfileStore = require('./profileStore')
 const PrivateStore = require('./privateStore')
@@ -173,7 +174,8 @@ class ThreeBox {
     if (serializedMuDID) {
       muportDID = new MuPort(serializedMuDID)
     } else {
-      const entropy = (await utils.openBoxConsent(address, web3provider)).slice(2, 34)
+      const sig = await utils.openBoxConsent(address, web3provider)
+      const entropy = sha256(sig.slice(2))
       const mnemonic = bip39.entropyToMnemonic(entropy)
       muportDID = await MuPort.newIdentity(null, null, {
         externalMgmtKey: address,
