@@ -256,7 +256,7 @@ Set a value for the given key
 | Param | Type | Description |
 | --- | --- | --- |
 | key | <code>String</code> | the key |
-| value | <code>String</code> | the value |
+| value | <code>Any</code> | the value |
 
 <a name="KeyValueStore+remove"></a>
 
